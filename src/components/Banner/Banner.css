@@ -1,0 +1,21 @@
+.banner_main {
+  width: 100%;
+  background: #effbfc;
+  text-align: center;
+}
+.banner_text {
+  padding: 15px 0;
+  color: #212121;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.banner_imageContainer {
+  width: 100%;
+  height: 340px;
+}
+.banner_imageContainer img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
