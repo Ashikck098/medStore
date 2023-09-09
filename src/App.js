@@ -1,10 +1,10 @@
 import "./App.css";
-import SingleView from "./pages/SingleView";
+import Home from "./pages/Home"
 
 function App() {
   return (
     <div className="App">
-      <SingleView/>
+      <Home/>
     </div>
   );
 }
