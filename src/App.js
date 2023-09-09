@@ -1,12 +1,10 @@
 import "./App.css";
-import Cart from "./pages/Cart";
-import Home from "./pages/Home";
+import SingleView from "./pages/SingleView";
 
 function App() {
   return (
     <div className="App">
-      {/* <Cart/> */}
-      <Home/>
+      <SingleView/>
     </div>
   );
 }
