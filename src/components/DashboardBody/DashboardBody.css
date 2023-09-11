@@ -181,3 +181,99 @@
   height: 28px;
   cursor: pointer;
 }
+
+/* orders page style starts here */
+
+.orders_main {
+  width: 100%;
+  height: 100%;
+  padding: 40px 50px 20px 50px;
+}
+
+.orders_card_container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: center;
+  overflow: auto;
+  height: 100%;
+}
+
+.orders_card_container::-webkit-scrollbar {
+  width: 5px;
+}
+
+.orders_card_container::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+.orders_card_container::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 5px;
+}
+
+.orders_card {
+  width: 55%;
+  border-radius: 8px;
+  display: flex;
+  align-items: flex-start;
+  border-radius: 8px;
+  border: 1px solid #dbdee9;
+  padding: 45px 20px 30px 20px;
+  gap: 20px;
+  position: relative;
+}
+.orders_card_image {
+  width: 100px;
+  height: 100px;
+}
+.orders_card_content {
+  display: flex;
+  flex-direction: column;
+}
+.orders_card_nameText {
+  color: #000;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 20px;
+}
+.orders_card_priceText {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  color: #212121;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.orders_card_customer_details {
+  margin-top: 20px;
+  display: flex;
+  align-items: center;
+  gap: 35px;
+}
+.orders_card_customer_details_label {
+  color: #000;
+  font-size: 16px;
+  font-weight: 400;
+}
+.orders_card_customer_details_data {
+  color: #000;
+  font-size: 16px;
+  font-weight: 600;
+}
+.name_data {
+  color: #00b5b7;
+}
+
+.cashRecieved {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  border-radius: 30px;
+  background: #00b86a;
+  padding: 10px 20px;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
+}
