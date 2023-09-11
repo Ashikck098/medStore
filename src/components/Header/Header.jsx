@@ -26,6 +26,9 @@ export const Header = () => {
         />
       </form>
       <button className="header_loginBtn" onClick={handleModal}>Login</button>
+
+      {/* <button className="header_orderBtn">Orders</button> */}
+
       <div className="header_cart_container">
         <img src={cart} alt="Cart" className="header_cartIcon" />
         <div className="headet_cart_count">0</div>

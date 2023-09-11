@@ -5,7 +5,6 @@
   justify-content: flex-end;
   padding: 20px 8%;
   box-shadow: 0px 0px 3px 0px rgba(0, 0, 0, 0.16);
-
 }
 .header_mainText {
   margin-right: auto;
@@ -53,6 +52,17 @@
   padding: 10px 28px;
   cursor: pointer;
 }
+.header_orderBtn {
+  border-radius: 4px;
+  border: 2px solid #00b5b7;
+  background: transparent;
+  color: #00b5b7;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 8px 22px;
+  cursor: pointer;
+}
+
 .header_cart_container {
   margin-left: 44px;
   position: relative;

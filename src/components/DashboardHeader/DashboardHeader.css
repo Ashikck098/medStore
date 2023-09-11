@@ -1,0 +1,30 @@
+.dashboardHeader_main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px 0;
+  border-bottom: 2px solid #f3f1ef;
+}
+
+.dashboardHeader_navItem_container {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 50px;
+}
+
+.dashboardHeader_navItem {
+  color: #000;
+  font-size: 16px;
+  font-weight: 400;
+  letter-spacing: 0.256px;
+  cursor: pointer;
+}
+
+.isActive {
+  color: #00b5b7;
+  font-size: 16px;
+  font-weight: 400;
+  letter-spacing: 0.256px;
+  cursor: pointer;
+}
