@@ -30,7 +30,7 @@ const AuthModal = (props) => {
           </p>
         </div>
         <div className="authModal_secondSection">
-          {showLogin ? <Login /> : <Register />}
+          {showLogin ? <Login  handleModal={props.handleModal}/> : <Register handleModal={props.handleModal}/>}
           <p className="authModal_link_text" onClick={toggleAuthComponent}>
             {" "}
             {linkText}

@@ -1,54 +1,79 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./SingleItem.css";
 import cart from "../../assets/yellow_cart.svg";
 import heart from "../../assets/favourite.svg";
-import medicine from "../../assets/medicine.png";
 import bestPrice from "../../assets/bestPrice.png";
+import { useParams } from "react-router-dom";
+import axios from "axios";
+import { API_URL } from "../../config";
 
 const SingleItem = () => {
-  const [count, setCount] = useState(0);
+  const [count, setCount] = useState(1);
+  const params = useParams();
+  const [product, setProduct] = useState();
+  const [selectedImage, setSelectedImage] = useState("");
 
   const handleIncrease = () => {
-    setCount(count + 1);
+    if (count < 10) {
+    setCount(count + 1);}
   };
 
   const handleDecrease = () => {
-    if (count > 0) {
+    if (count > 1) {
       setCount(count - 1);
     }
   };
+
+  const handleThumbnailClick = (imageURL) => {
+    setSelectedImage(imageURL);
+  };
+
+  const itemId = params?.id;
+
+  useEffect(() => {
+    axios
+      .post(`${API_URL}/getproductsingle/${itemId}`)
+      .then((response) => {
+        setProduct(response.data);
+        setSelectedImage(response.data.productImage[0]?.url);
+      })
+      .catch((error) => {
+        console.error("Error", error);
+      });
+  }, [itemId]);
 
   return (
     <div className="singleItem_main">
       <div className="singleItem_first_section">
         <div className="singleItem_select_images_container">
-          <div className="singleItem_select_images_box active">
-            <img src={medicine} alt="" />
-          </div>
-          <div className="singleItem_select_images_box">
-            <img src={medicine} alt="" />
-          </div>
-          <div className="singleItem_select_images_box">
-            <img src={medicine} alt="" />
-          </div>
-          <div className="singleItem_select_images_box">
-            <img src={medicine} alt="" />
-          </div>
+          {product?.productImage.map((image, index) => (
+            <div
+              key={index}
+              className={`singleItem_select_images_box ${
+                selectedImage === image.url ? "active" : ""
+              }`}
+              onClick={() => handleThumbnailClick(image.url)} // Handle thumbnail click
+            >
+              <img src={image.url} alt="" />
+            </div>
+          ))}
         </div>
 
         <div className="singleItem_image_box">
-          <img src={medicine} alt="" className="singleItem_image_box_image" />
+          <img
+            src={selectedImage}
+            alt=""
+            className="singleItem_image_box_image"
+          />
           <img src={bestPrice} alt="" className="bestPrice_image" />
         </div>
       </div>
 
       <div className="singleItem_second_section">
-        <h2 className="singleItem_name_text">
-          TrueBasics Heart Omega-3 Antarctic Krill Oil, 30 capsules
-        </h2>
+        <h2 className="singleItem_name_text">{product?.productName}</h2>
         <div className="singleItem_price_container">
           <p className="singleItem_price_text">
-            Price: <span>₹799</span>
+            Price: <span>₹{product?.price}</span>
           </p>
           <div className="favourite">
             <img src={heart} alt="" />

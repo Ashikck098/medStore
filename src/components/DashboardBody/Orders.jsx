@@ -36,6 +36,14 @@ const Orders = () => {
               Madras Home 17A, Number 20 Madras mail
             </p>
           </div>
+          <div className="orders_card_customer_details">
+            <label htmlFor="" className="orders_card_customer_details_label">
+              Quantity :
+            </label>
+            <p className="orders_card_customer_details_data">
+              23
+            </p>
+          </div>
         </div>
         <div className="cashRecieved">Cash Received</div>
       </div>

@@ -38,7 +38,7 @@
 .addProduct_from_input {
   border-radius: 6px;
   border: 1px solid #000;
-  padding: 8px 16px;
+  padding: 10px 16px;
   outline: none;
   color: #000;
   font-size: 15px;
@@ -46,6 +46,14 @@
 }
 .addProduct_from_input::placeholder {
   color: #808080;
+}
+.addProduct_from_input::-webkit-outer-spin-button,
+.addProduct_from_input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}
+/* Firefox */
+.addProduct_from_input {
+  -moz-appearance: textfield;
 }
 
 .imagePicker_label {
@@ -84,8 +92,6 @@
 .addProduct_image_box {
   width: 55px;
   height: 55px;
-  background: url("../../assets/image.svg") no-repeat center;
-  background-size: 35px;
   border: 1px solid #000;
   border-radius: 10px;
   overflow: hidden;
@@ -276,4 +282,12 @@
   color: #fff;
   font-size: 14px;
   font-weight: 600;
+}
+
+.empty_product_text{
+  color: #0074b7;
+  font-weight: 500;
+  font-size: 18px;
+  text-align: center;
+  margin-top: 20%;
 }
