@@ -1,45 +1,52 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./OrderItems.css";
-import medicine from "../../assets/medicine.png";
 import remove from "../../assets/trash_bin.svg";
 import heart from "../../assets/favourite.svg";
+import { useNavigate } from "react-router-dom";
+import axiosApi from "../../AxiosMethod";
 
 const OrderItems = () => {
+  const [details, setDetails] = useState();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    axiosApi
+      .get("/getsingleorders")
+      .then((response) => {
+        setDetails(response.data);
+      })
+      .catch((error) => {
+        console.error("Error", error);
+      });
+  }, []);
+  const detail = details?.Order;
+
   return (
     <div className="orderItems_main">
-      <h1 className="orderItems_heading">Your Orders ( 2 items )</h1>
+      <h1 className="orderItems_heading">
+        Your Orders ( {details?.Orderscount} items )
+      </h1>
       <div className="orderItems_card_container">
-        <div className="orderItems_card">
-          <img src={medicine} alt="" className="orderItems_card_image" />
-          <div className="orderItems_card_text_container">
-            <p className="orderItems_card_name_text">
-              TrueBasics Fish Oil with 1250mg Omega-3 560mg EPA 400mg DHA, 60
-              capsules
-            </p>
-            <span className="orderItems_card_price_text">₹999</span>
+        {detail?.map((order, key) => (
+          <div key={key} className="orderItems_card">
+            <img src={order?.product?.productImage?.[0]?.url} alt="" className="orderItems_card_image" />
+            <div className="orderItems_card_text_container">
+              <p className="orderItems_card_name_text">
+                {order?.product?.productName}
+              </p>
+              <span className="orderItems_card_price_text">₹{order?.totalPay}</span>
+              <span className="orderItems_card_name_text">Quantity: {order?.purchasedCount}</span>
+            </div>
+            <div className="orderItems_card_actions">
+              <img src={remove} alt="Delete" className="delete_icon" />
+              <img src={heart} alt="Favourite" className="heart_icon" />
+            </div>
           </div>
-          <div className="orderItems_card_actions">
-            <img src={remove} alt="Delete" className="delete_icon" />
-            <img src={heart} alt="Favourite" className="heart_icon" />
-          </div>
-        </div>
-
-        <div className="orderItems_card">
-          <img src={medicine} alt="" className="orderItems_card_image" />
-          <div className="orderItems_card_text_container">
-            <p className="orderItems_card_name_text">
-              TrueBasics Fish Oil with 1250mg Omega-3 560mg EPA 400mg DHA, 60
-              capsules
-            </p>
-            <span className="orderItems_card_price_text">₹999</span>
-          </div>
-          <div className="orderItems_card_actions">
-            <img src={remove} alt="Delete" className="delete_icon" />
-            <img src={heart} alt="Favourite" className="heart_icon" />
-          </div>
-        </div>
+        ))}
       </div>
-      <h5 className="continueShopping_text">Continue Shopping</h5>
+      <h5 className="continueShopping_text" onClick={() => navigate("/")}>
+        Continue Shopping
+      </h5>
     </div>
   );
 };

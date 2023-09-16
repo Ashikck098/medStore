@@ -1,23 +1,23 @@
 import React, { useState } from "react";
 import "./AuthModal.css";
-import axios from "axios";
-import { API_URL } from "../../config";
+import axiosApi from "../../AxiosMethod";
 
-const Register = ({handleModal}) => {
-const [data, setData] = useState();
+const Register = ({ handleModal }) => {
+  const [data, setData] = useState();
 
-const handleRegister = (e) => {
-e.preventDefault();
-  axios.post(`${API_URL}/register`, data).then((response)=> {
-    console.log(response.data);
-    handleModal();
-  }).catch((error)=>{
-    console.error("Error", error);
-  });
-}
+  const handleRegister = (e) => {
+    e.preventDefault();
+    axiosApi
+      .post("/register", data)
+      .then((response) => {
+        handleModal();
+      })
+      .catch((error) => {
+        console.error("Error", error);
+      });
+  };
 
-console.log(data);
-
+  console.log(data);
 
   return (
     <div>
@@ -27,21 +27,23 @@ console.log(data);
           type="text"
           placeholder="Full name"
           className="authModal_inputField"
-          onChange={(e)=> setData({...data,fullName:e.target.value})}
+          onChange={(e) => setData({ ...data, fullName: e.target.value })}
         />
         <input
           type="text"
           placeholder="Username"
           className="authModal_inputField"
-          onChange={(e)=> setData({...data,userName:e.target.value})}
+          onChange={(e) => setData({ ...data, userName: e.target.value })}
         />
         <input
           type="password"
           placeholder="Password"
           className="authModal_inputField"
-          onChange={(e)=> setData({...data,password:e.target.value})}
+          onChange={(e) => setData({ ...data, password: e.target.value })}
         />
-        <button className="authModal_auth_button" onClick={handleRegister}>Create account</button>
+        <button className="authModal_auth_button" onClick={handleRegister}>
+          Create account
+        </button>
       </form>
     </div>
   );

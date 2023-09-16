@@ -64,7 +64,8 @@
 }
 
 .cartItems_card_actions {
-  margin-left: 40px;
+
+  margin-left: auto;
   display: flex;
   gap: 15px;
   align-items: center;

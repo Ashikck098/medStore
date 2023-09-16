@@ -1,19 +1,24 @@
 import React, { useState } from "react";
 import "./AuthModal.css";
-import axios from "axios";
-import { API_URL } from "../../config";
+import axiosApi from "../../AxiosMethod";
+import { useNavigate } from "react-router-dom";
 
 const Login = ({ handleModal }) => {
   const [data, setData] = useState();
+  const navigate = useNavigate();
 
   const handleLogin = (e) => {
     e.preventDefault();
-    axios
-      .post(`${API_URL}/login`, data)
+
+    axiosApi
+      .post("/login", data)
       .then((response) => {
         console.log(response.data);
         localStorage.setItem("token", response.data.token);
         handleModal();
+        if (response.data.role === "admin") {
+          navigate("/dashboard");
+        }
       })
       .catch((error) => {
         console.error("Error", error);

@@ -2,8 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./DashboardBody.css";
 import delete_icon from "../../assets/delete_white.svg";
 import gallery from "../../assets/image.svg";
-import axios from "axios";
-import { API_URL } from "../../config";
+import axiosApi from "../../AxiosMethod";
 
 const AddProduct = () => {
   const [selectedImages, setSelectedImages] = useState([]);
@@ -45,8 +44,8 @@ const AddProduct = () => {
       }
     }
     setButtonText("Uploading...");
-    axios
-      .post(`${API_URL}/addproducts`, formData, {
+    axiosApi
+      .post("/addproducts", formData, {
         headers: {
           productName: "",
           price: "",
@@ -72,8 +71,8 @@ const AddProduct = () => {
   };
 
   useEffect(() => {
-    axios
-      .get(`${API_URL}/getallproducts`)
+    axiosApi
+      .get("/getallproducts")
       .then((response) => {
         setProducts(response.data.allproducts);
       })
@@ -83,13 +82,18 @@ const AddProduct = () => {
   }, []);
 
   const handdleDelete = (itemId) => {
-    axios.delete(`${API_URL}/deleteproduct/${itemId}`).then((response) => {
-      if (response.data) {
-        setProducts((prevProducts) =>
-          prevProducts.filter((product) => product._id !== itemId)
-        );
-      }
-    });
+    axiosApi
+      .delete(`/deleteproduct/${itemId}`)
+      .then((response) => {
+        if (response.data) {
+          setProducts((prevProducts) =>
+            prevProducts.filter((product) => product._id !== itemId)
+          );
+        }
+      })
+      .catch((error) => {
+        console.error("Error", error);
+      });
   };
 
   const limitProductName = (productName) => {

@@ -3,19 +3,20 @@ import "./SingleItem.css";
 import cart from "../../assets/yellow_cart.svg";
 import heart from "../../assets/favourite.svg";
 import bestPrice from "../../assets/bestPrice.png";
-import { useParams } from "react-router-dom";
-import axios from "axios";
-import { API_URL } from "../../config";
+import { useNavigate, useParams } from "react-router-dom";
+import axiosApi from "../../AxiosMethod";
 
 const SingleItem = () => {
   const [count, setCount] = useState(1);
   const params = useParams();
+  const navigate = useNavigate();
   const [product, setProduct] = useState();
   const [selectedImage, setSelectedImage] = useState("");
 
   const handleIncrease = () => {
     if (count < 10) {
-    setCount(count + 1);}
+      setCount(count + 1);
+    }
   };
 
   const handleDecrease = () => {
@@ -31,8 +32,8 @@ const SingleItem = () => {
   const itemId = params?.id;
 
   useEffect(() => {
-    axios
-      .post(`${API_URL}/getproductsingle/${itemId}`)
+    axiosApi
+      .post(`/getproductsingle/${itemId}`)
       .then((response) => {
         setProduct(response.data);
         setSelectedImage(response.data.productImage[0]?.url);
@@ -41,6 +42,35 @@ const SingleItem = () => {
         console.error("Error", error);
       });
   }, [itemId]);
+
+  const handleAddToCart = (productId) => {
+    const data = {
+      cart: [
+        {
+          product: productId,
+          selectedCount: 1,
+        },
+      ],
+    };
+    axiosApi
+      .post("/addCart", data)
+      .then((response) => {})
+      .catch((error) => {
+        console.error("Error", error);
+      });
+  };
+
+  const handleOrder = (productId) => {
+    const data = {
+      product: productId,
+      purchasedCount: count,
+    }
+    axiosApi.post('/addorder',data).then((response)=> {
+      navigate(`/address?data=${JSON.stringify(response.data)}`);
+    }).catch((error)=>{
+      console.error("Error", error);
+    })
+  }
 
   return (
     <div className="singleItem_main">
@@ -52,7 +82,7 @@ const SingleItem = () => {
               className={`singleItem_select_images_box ${
                 selectedImage === image.url ? "active" : ""
               }`}
-              onClick={() => handleThumbnailClick(image.url)} // Handle thumbnail click
+              onClick={() => handleThumbnailClick(image.url)}
             >
               <img src={image.url} alt="" />
             </div>
@@ -90,10 +120,13 @@ const SingleItem = () => {
             </button>
           </div>
 
-          <button className="singleItem_addTocart_btn">
+          <button
+            className="singleItem_addTocart_btn"
+            onClick={() => handleAddToCart(itemId)}
+          >
             <img src={cart} alt="" className="cart_icon" /> Add To Cart
           </button>
-          <button className="singleItem_buyNow_btn">Buy Now</button>
+          <button className="singleItem_buyNow_btn" onClick={()=>handleOrder(itemId)}>Buy Now</button>
         </div>
       </div>
     </div>

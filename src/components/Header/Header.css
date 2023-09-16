@@ -66,6 +66,7 @@
 .header_cart_container {
   margin-left: 44px;
   position: relative;
+  cursor: pointer;
 }
 .header_cartIcon {
   width: 28px;
@@ -86,4 +87,11 @@
   font-weight: 400;
   display: grid;
   place-items: center;
+}
+
+.logout_icon {
+  margin-left: 60px;
+  width: 22px;
+  height: 22px;
+  cursor: pointer;
 }
