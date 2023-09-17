@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from "react";
 import "./Collections.css";
-import favourite from "../../assets/favourite.svg";
+import heartWhite from "../../assets/favourite.svg";
+import heartPink from "../../assets/Heart.svg";
 import { useNavigate } from "react-router-dom";
 import axiosApi from "../../AxiosMethod";
-import { useCart } from "../../CartContext";
+import { useMyContext } from "../../Context";
 
 const Collections = () => {
   const [products, setProducts] = useState();
+  const [favourite, setFavourite] = useState(true);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -27,10 +29,30 @@ const Collections = () => {
     }
     return productName;
   };
+  const { setCartCount } = useMyContext();
 
-  const { handleAddToCart } = useCart();
-  const handleAddProductToCart = (productId) => {
-    handleAddToCart(productId);
+  const handleAddToCart = (productId) => {
+    const data = {
+      cart: [
+        {
+          product: productId,
+          selectedCount: 1,
+        },
+      ],
+    };
+    axiosApi
+      .post("/addCart", data)
+      .then((response) => {
+        setCartCount(response.data.cart.length);
+      })
+      .catch((error) => {
+        console.error("Error", error);
+      });
+  };
+
+
+  const handleClick = (id) => {
+    setFavourite({ ...favourite, [id]: !favourite[id] });
   };
 
   return (
@@ -49,7 +71,7 @@ const Collections = () => {
                 className="card_itemImage"
               />
             </div>
-            <img src={favourite} alt="Heart" className="card_favourite" />
+            <img src={favourite[key] ? heartPink : heartWhite} alt="Heart" className="card_favourite" onClick={() => handleClick(key)}/>
             <div className="card_content_section">
               <div
                 className="card_text_contents"
@@ -62,7 +84,7 @@ const Collections = () => {
               </div>
               <button
                 className="addToCart_btn"
-                onClick={() => handleAddProductToCart(product?._id)}
+                onClick={() => handleAddToCart(product?._id)}
               >
                 Add to Cart
               </button>

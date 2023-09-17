@@ -7,10 +7,10 @@ import Collections from "../components/Collections/Collections";
 const Home = () => {
   return (
     <div>
-      <Header />
+      <Header/>
       <SubHeader />
       <Banner />
-      <Collections />
+      <Collections/>
     </div>
   );
 };

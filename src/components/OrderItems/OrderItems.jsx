@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import axiosApi from "../../AxiosMethod";
 
 const OrderItems = () => {
-  const [details, setDetails] = useState();
+  const [details, setDetails] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -21,6 +21,19 @@ const OrderItems = () => {
   }, []);
   const detail = details?.Order;
 
+  const handleRemoveOrder = (orderId) => {
+    axiosApi
+      .delete(`/cancelorder/${orderId}`)
+      .then((response) => {
+        axiosApi.get("/getsingleorders").then((response) => {
+          setDetails(response.data);
+        });
+      })
+      .catch((error) => {
+        console.error("Error", error);
+      });
+  };
+
   return (
     <div className="orderItems_main">
       <h1 className="orderItems_heading">
@@ -29,16 +42,29 @@ const OrderItems = () => {
       <div className="orderItems_card_container">
         {detail?.map((order, key) => (
           <div key={key} className="orderItems_card">
-            <img src={order?.product?.productImage?.[0]?.url} alt="" className="orderItems_card_image" />
+            <img
+              src={order?.product?.productImage?.[0]?.url}
+              alt=""
+              className="orderItems_card_image"
+            />
             <div className="orderItems_card_text_container">
               <p className="orderItems_card_name_text">
                 {order?.product?.productName}
               </p>
-              <span className="orderItems_card_price_text">₹{order?.totalPay}</span>
-              <span className="orderItems_card_name_text">Quantity: {order?.purchasedCount}</span>
+              <span className="orderItems_card_price_text">
+                ₹{order?.totalPay}
+              </span>
+              <span className="orderItems_card_name_text">
+                Quantity: {order?.purchasedCount}
+              </span>
             </div>
             <div className="orderItems_card_actions">
-              <img src={remove} alt="Delete" className="delete_icon" />
+              <img
+                src={remove}
+                alt="Delete"
+                className="delete_icon"
+                onClick={() => handleRemoveOrder(order?._id)}
+              />
               <img src={heart} alt="Favourite" className="heart_icon" />
             </div>
           </div>

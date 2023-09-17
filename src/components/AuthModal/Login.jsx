@@ -13,7 +13,6 @@ const Login = ({ handleModal }) => {
     axiosApi
       .post("/login", data)
       .then((response) => {
-        console.log(response.data);
         localStorage.setItem("token", response.data.token);
         handleModal();
         if (response.data.role === "admin") {

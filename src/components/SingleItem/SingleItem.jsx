@@ -5,6 +5,7 @@ import heart from "../../assets/favourite.svg";
 import bestPrice from "../../assets/bestPrice.png";
 import { useNavigate, useParams } from "react-router-dom";
 import axiosApi from "../../AxiosMethod";
+import { useMyContext } from "../../Context";
 
 const SingleItem = () => {
   const [count, setCount] = useState(1);
@@ -43,6 +44,7 @@ const SingleItem = () => {
       });
   }, [itemId]);
 
+  const { setCartCount } = useMyContext();
   const handleAddToCart = (productId) => {
     const data = {
       cart: [
@@ -54,7 +56,9 @@ const SingleItem = () => {
     };
     axiosApi
       .post("/addCart", data)
-      .then((response) => {})
+      .then((response) => {
+        setCartCount(response.data.cart.length);
+      })
       .catch((error) => {
         console.error("Error", error);
       });
@@ -64,13 +68,16 @@ const SingleItem = () => {
     const data = {
       product: productId,
       purchasedCount: count,
-    }
-    axiosApi.post('/addorder',data).then((response)=> {
-      navigate(`/address?data=${JSON.stringify(response.data)}`);
-    }).catch((error)=>{
-      console.error("Error", error);
-    })
-  }
+    };
+    axiosApi
+      .post("/addorder", data)
+      .then((response) => {
+        navigate(`/address?data=${JSON.stringify(response.data)}`);
+      })
+      .catch((error) => {
+        console.error("Error", error);
+      });
+  };
 
   return (
     <div className="singleItem_main">
@@ -126,7 +133,12 @@ const SingleItem = () => {
           >
             <img src={cart} alt="" className="cart_icon" /> Add To Cart
           </button>
-          <button className="singleItem_buyNow_btn" onClick={()=>handleOrder(itemId)}>Buy Now</button>
+          <button
+            className="singleItem_buyNow_btn"
+            onClick={() => handleOrder(itemId)}
+          >
+            Buy Now
+          </button>
         </div>
       </div>
     </div>

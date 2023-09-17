@@ -5,7 +5,7 @@ import cart from "../../assets/cart_icon.svg";
 import logout from "../../assets/logout.svg";
 import AuthModal from "../AuthModal/AuthModal";
 import { useNavigate } from "react-router-dom";
-import { useCart } from "../../CartContext";
+import { useMyContext } from "../../Context";
 
 export const Header = () => {
   const [showModal, setShowModal] = useState(false);
@@ -25,8 +25,7 @@ export const Header = () => {
     setToken(localStorage.getItem("token"));
   }, [showModal]);
 
-  const items = useCart();
-
+  const { cartCount } = useMyContext();
   return (
     <>
       <div className="header_main">
@@ -57,7 +56,7 @@ export const Header = () => {
           onClick={() => navigate("/cart")}
         >
           <img src={cart} alt="Cart" className="header_cartIcon" />
-          <div className="headet_cart_count">{items?.cartCount}</div>
+          <div className="headet_cart_count">{cartCount}</div>
         </div>
         {token && (
           <img

@@ -1,52 +1,85 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./DashboardBody.css";
 import medicine from "../../assets/medicine.png";
+import axiosApi from "../../AxiosMethod";
 
 const Orders = () => {
+  const [orders, setOreders] = useState();
+
+  useEffect(() => {
+    axiosApi
+      .get("/getallorders")
+      .then((response) => {
+        console.log(response.data);
+        setOreders(response.data);
+      })
+      .catch((error) => {
+        console.error("Error", error);
+      });
+  }, []);
+
+  const order = orders?.Order;
+  console.log(order);
+
   return (
     <div className="orders_main">
-        <div className="orders_card_container">
-      <div className="orders_card">
-        <img src={medicine} alt="Product" className="orders_card_image" />
-        <div className="orders_card_content">
-          <h5 className="orders_card_nameText">
-            TrueBasics Fish Oil with 1250mg Omega-3 560mg EPA 400mg DHA, 60
-            capsules
-          </h5>
-          <p className="orders_card_priceText">₹999</p>
-          <div className="orders_card_customer_details">
-            <label htmlFor="" className="orders_card_customer_details_label">
-              Customer name :
-            </label>
-            <p className="orders_card_customer_details_data name_data">
-              Sharath Kumar
-            </p>
+      <div className="orders_card_container">
+        {order?.map((order, key) => (
+          <div className="orders_card">
+            <img src={medicine} alt="Product" className="orders_card_image" />
+            <div className="orders_card_content">
+              <h5 className="orders_card_nameText">
+                {order?.product?.productName}
+              </h5>
+              <p className="orders_card_priceText">₹9{order?.totalPay}</p>
+              <div className="orders_card_customer_details">
+                <label
+                  htmlFor=""
+                  className="orders_card_customer_details_label"
+                >
+                  Customer name :
+                </label>
+                <p className="orders_card_customer_details_data name_data">
+                  {order?.address?.[0]?.name}
+                </p>
+              </div>
+              <div className="orders_card_customer_details">
+                <label
+                  htmlFor=""
+                  className="orders_card_customer_details_label"
+                >
+                  Mobile number :
+                </label>
+                <p className="orders_card_customer_details_data">
+                  {order?.address?.[0]?.mobileNo}
+                </p>
+              </div>
+              <div className="orders_card_customer_details">
+                <label
+                  htmlFor=""
+                  className="orders_card_customer_details_label"
+                >
+                  Address :
+                </label>
+                <p className="orders_card_customer_details_data">
+                  {order?.address?.[0]?.areaAndAdress}
+                </p>
+              </div>
+              <div className="orders_card_customer_details">
+                <label
+                  htmlFor=""
+                  className="orders_card_customer_details_label"
+                >
+                  Quantity :
+                </label>
+                <p className="orders_card_customer_details_data">
+                  {order?.purchasedCount}
+                </p>
+              </div>
+            </div>
+            <div className="cashRecieved">Cash Received</div>
           </div>
-          <div className="orders_card_customer_details">
-            <label htmlFor="" className="orders_card_customer_details_label">
-              Mobile number :
-            </label>
-            <p className="orders_card_customer_details_data">9675435489</p>
-          </div>
-          <div className="orders_card_customer_details">
-            <label htmlFor="" className="orders_card_customer_details_label">
-              Address :
-            </label>
-            <p className="orders_card_customer_details_data">
-              Madras Home 17A, Number 20 Madras mail
-            </p>
-          </div>
-          <div className="orders_card_customer_details">
-            <label htmlFor="" className="orders_card_customer_details_label">
-              Quantity :
-            </label>
-            <p className="orders_card_customer_details_data">
-              23
-            </p>
-          </div>
-        </div>
-        <div className="cashRecieved">Cash Received</div>
-      </div>
+        ))}
       </div>
     </div>
   );

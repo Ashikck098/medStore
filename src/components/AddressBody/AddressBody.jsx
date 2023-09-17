@@ -72,6 +72,7 @@ const AddressBody = () => {
             id=""
             cols="30"
             rows="2"
+            autoComplete="off"
             placeholder="Type Your Address"
             className="address_form_inputField"
             onChange={(e) => setAbout({ ...about, address: e.target.value })}
