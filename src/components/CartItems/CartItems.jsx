@@ -19,7 +19,24 @@ const CartItems = () => {
         console.error("Error", error);
       });
   }, []);
-  const details = items?.addedCart;
+
+  const details = items?.addedCart?.cart;
+
+  const handleRemoveCart = (productId) => {
+    axiosApi
+      .delete(`/removeCart/${productId}`)
+      .then((response) => {
+        axiosApi
+        .get("/getSingleCart")
+        .then((response) => {
+          setItems(response.data);
+        })
+      })
+      .catch((error) => {
+        console.error("Error", error);
+      });
+  };
+
   return (
     <div className="cartItems_main">
       <h1 className="cartItems_heading">
@@ -35,14 +52,19 @@ const CartItems = () => {
             />
             <div className="cartItems_card_text_container">
               <p className="cartItems_card_name_text">
-                {detail?.product?.name}
+                {detail?.product?.productName}
               </p>
               <span className="cartItems_card_price_text">
                 ₹{detail?.product?.price}
               </span>
             </div>
             <div className="cartItems_card_actions">
-              <img src={remove} alt="Delete" className="delete_icon" />
+              <img
+                src={remove}
+                alt="Delete"
+                className="delete_icon"
+                onClick={() => handleRemoveCart(detail?._id)}
+              />
               <img src={heart} alt="Favourite" className="heart_icon" />
             </div>
           </div>
