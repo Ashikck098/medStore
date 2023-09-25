@@ -24,7 +24,7 @@
   width: 18.5px;
   height: 18.5px;
 }
-.header_searchInput {
+.header_search_form .header_searchInput {
   border-radius: 8px;
   background: #f7f7f7;
   color: #1d1d1d;

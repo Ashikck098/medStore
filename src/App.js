@@ -8,6 +8,7 @@ import Cart from "./pages/Cart"
 import Address from "./pages/Address"
 import Payment from "./pages/Payment"
 import PaymentSuccess from "./pages/PaymentSuccess/PaymentSuccess"
+import SearchPage from "./components/SearchPage/SearchPage";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
         <Route path="/address" element={<Address/>} />
         <Route path="/payment/:id" element={<Payment/>} />
         <Route path="/paymentSuccess" element={<PaymentSuccess/>} />
+        <Route path="/search/:data" element={<SearchPage />} />
       </Routes>
     </div>
   );
