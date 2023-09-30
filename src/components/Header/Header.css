@@ -11,6 +11,7 @@
   color: #00aaab;
   font-size: 20px;
   font-weight: 700;
+  cursor: pointer;
 }
 .header_search_form {
   margin-right: 90px;

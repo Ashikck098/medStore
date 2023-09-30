@@ -43,7 +43,11 @@ const Collections = () => {
     axiosApi
       .post("/addCart", data)
       .then((response) => {
-        setCartCount(response.data.cart.length);
+        axiosApi
+          .get("/getSingleCart")
+          .then((response) => {
+            setCartCount(response.data?.totalcount);
+          });
       })
       .catch((error) => {
         console.error("Error", error);

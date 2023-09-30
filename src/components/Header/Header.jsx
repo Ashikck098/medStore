@@ -20,6 +20,7 @@ export const Header = ({ decodedData }) => {
   const handleLogout = () => {
     localStorage.removeItem("token");
     setToken(null);
+    window.location.reload();
   };
 
   useEffect(() => {

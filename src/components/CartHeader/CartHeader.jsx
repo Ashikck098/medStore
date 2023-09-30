@@ -1,11 +1,13 @@
 import React from "react";
 import "./CartHeader.css";
 import cart from "../../assets/cart.svg";
+import { useNavigate } from "react-router-dom";
 
 const CartHeader = () => {
+  const navigate = useNavigate();
   return (
     <div className="header_main">
-      <h1 className="header_mainText">MEDSTORE</h1>
+      <h1 className="header_mainText" onClick={() => navigate("/")}>MEDSTORE</h1>
       <form action="" className="header_search_form">
         <input
           type="text"

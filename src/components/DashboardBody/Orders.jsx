@@ -10,7 +10,6 @@ const Orders = () => {
     axiosApi
       .get("/getallorders")
       .then((response) => {
-        console.log(response.data);
         setOreders(response.data);
       })
       .catch((error) => {
@@ -19,13 +18,12 @@ const Orders = () => {
   }, []);
 
   const order = orders?.Order;
-  console.log(order);
 
   return (
     <div className="orders_main">
       <div className="orders_card_container">
         {order?.map((order, key) => (
-          <div className="orders_card">
+          <div key={key} className="orders_card">
             <img src={medicine} alt="Product" className="orders_card_image" />
             <div className="orders_card_content">
               <h5 className="orders_card_nameText">
