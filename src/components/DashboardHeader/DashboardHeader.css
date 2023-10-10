@@ -4,6 +4,7 @@
   align-items: center;
   padding: 40px 0;
   border-bottom: 2px solid #f3f1ef;
+  position: relative;
 }
 
 .dashboardHeader_navItem_container {
@@ -27,4 +28,11 @@
   font-weight: 400;
   letter-spacing: 0.256px;
   cursor: pointer;
+}
+
+.dashboard_logout_icon {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  right: 5%;
 }

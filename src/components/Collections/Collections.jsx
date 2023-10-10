@@ -61,7 +61,7 @@ const Collections = () => {
 
   return (
     <div className="collections_main">
-      <h1 className="collections_headingText">Price Slash Alert</h1>
+      <h1 className="collections_headingText">Recommended For You</h1>
       <div className="collections_card_container">
         {products?.map((product, key) => (
           <div key={key} className="collections_card">
