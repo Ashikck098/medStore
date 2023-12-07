@@ -16,7 +16,7 @@
   width: 900px;
   height: 550px;
   border-radius: 12px;
-  background: #fff;
+  background: #ffffff;
   overflow: hidden;
   z-index: 2;
 }
@@ -28,11 +28,11 @@
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  background: #f6f6f6;
+  background: #017b18;
 }
 .authModal_firstSection_mainText {
   margin-top: 40px;
-  color: #1c1c28;
+  color: #f4f4f7;
   font-size: 18px;
   font-weight: 600;
 }
@@ -44,7 +44,7 @@
 
 .authModal_firstSection_paraText {
   margin-top: 16px;
-  color: #77777e;
+  color: #f8f8f9;
   font-size: 12px;
   font-weight: 500;
 }

@@ -2,10 +2,14 @@ import React, { useState } from "react";
 import "./AuthModal.css";
 import axiosApi from "../../AxiosMethod";
 import { useNavigate } from "react-router-dom";
+import toast, { Toaster } from 'react-hot-toast';
 
 const Login = ({ handleModal }) => {
   const [data, setData] = useState();
   const navigate = useNavigate();
+ 
+  const SuccessNotify = () => toast.success('Successfully logined!')
+
 
   const handleLogin = (e) => {
     e.preventDefault();
@@ -13,14 +17,19 @@ const Login = ({ handleModal }) => {
     axiosApi
       .post("/login", data)
       .then((response) => {
-        console.log(response.data);
+         
+        SuccessNotify()
+
         localStorage.setItem("token", response.data.token);
         localStorage.setItem("role", response.data.role);
-        handleModal();
-        if (response.data.role === "admin") {
-          navigate("/dashboard");
-        }
-        window.location.reload();
+         setTimeout(() => {
+          handleModal();
+          if (response.data.role === "admin") {
+            navigate("/dashboard");
+          }
+          window.location.reload();
+         }, 2000);
+    
       })
       .catch((error) => {
         console.error("Error", error);
@@ -46,6 +55,7 @@ const Login = ({ handleModal }) => {
           Login
         </button>
       </form>
+      <Toaster  position="top-right" />
     </div>
   );
 };

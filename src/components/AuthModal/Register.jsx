@@ -1,20 +1,46 @@
 import React, { useState } from "react";
 import "./AuthModal.css";
 import axiosApi from "../../AxiosMethod";
+import toast, { Toaster } from 'react-hot-toast';
+
+
+
 
 const Register = ({ handleModal }) => {
   const [data, setData] = useState();
+   
+  const SuccessNotify = () => toast.success('Successfully registered!')
+  const ErrorNotify = () => toast.error("password is not strong.")
+ 
+  function validation(data) {
+    const regex = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/;
+    
+    console.log(data);
+  
+     if (regex.test(data.password)) {
+      return true
+     }
+    
+     ErrorNotify()
+     return false 
+  }
 
   const handleRegister = (e) => {
     e.preventDefault();
-    axiosApi
+    const valid = validation(data)
+    if (valid) {
+      axiosApi
       .post("/register", data)
       .then((response) => {
+        SuccessNotify()
+        setTimeout(() => {
         handleModal();
+        }, 2000);        
       })
       .catch((error) => {
         console.error("Error", error);
       });
+    }
   };
 
   console.log(data);
@@ -45,6 +71,7 @@ const Register = ({ handleModal }) => {
           Create account
         </button>
       </form>
+      <Toaster  position="top-right" />
     </div>
   );
 };
