@@ -7,9 +7,13 @@ import offer from "../../assets/offerZone.svg";
 import blog from "../../assets/blogs.svg";
 import gift from "../../assets/giftCard.svg";
 import customer from "../../assets/customerSupport.svg";
-import store from "../../assets/storeLocator.svg";
+import scanner from "../../assets/scanner.png";
+import { useNavigate } from "react-router-dom";
 
 const SubHeader = () => {
+
+  const navigate = useNavigate()
+
   return (
     <div className="subHeader_main">
       <div className="subHeader_shopCategory">
@@ -39,9 +43,9 @@ const SubHeader = () => {
         <img src={customer} alt="Icon" />
         Customer Support
       </div>{" "}
-      <div className="subHeader_card">
-        <img src={store} alt="Icon" />
-        Store locator
+      <div className="subHeader_card" onClick={()=>navigate('/medlens')}>
+        <img src={scanner} alt="Icon" />
+        Med lens
       </div>
     </div>
   );
