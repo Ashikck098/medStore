@@ -1,8 +1,9 @@
 import React, { useState } from 'react'
 import './LensSection.css'
 import preview from "../../assets/preview.png";
-import Tesseract from 'tesseract.js';
+// import Tesseract from 'tesseract.js';
 import { useNavigate } from 'react-router-dom';
+import axiosApi from '../../AxiosMethod';
 
 const LensSection = () => {
     const navigate = useNavigate();
@@ -34,20 +35,63 @@ const LensSection = () => {
     }
 
     const handleExtractText = () => {
-    
+       
+        setExtractedText('');
+        setErrorMessage('');
+          
         showLoader(true);
-        Tesseract.recognize(
-            file,
-            'eng',
-            { logger: m => console.log(m) }
-        ).then(({ data: { text } }) => {
-             console.log(text);
-            setExtractedText(text);
-            showLoader(false);
-        }).catch(error => {
-            setErrorMessage('Error occurred during OCR processing.');
-            showLoader(false);
-        });
+       
+
+        let formData = new FormData();
+        formData.append("image", file);
+        
+        console.log(file);
+        
+        axiosApi
+          .post("/identifyimage", formData, {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          })
+          .then((response) => {
+            console.log(response.data.answer);
+
+            let result = response.data.answer
+
+            setExtractedText(result)
+  
+            // if (result.includes("medicine")) {
+
+            //     const medicineNames = result.split("\n").slice(1).map(medicine => medicine.trim());
+
+            //     console.log("Medicine Names:", medicineNames);
+
+            //     setExtractedText(medicineNames);
+            // } else {
+            //     setErrorMessage(result)
+            // }
+
+           showLoader(false);
+
+          })
+          .catch((error) => {
+            console.error("Error", error);
+           showLoader(false);
+
+          })
+
+        // Tesseract.recognize(
+        //     file,
+        //     'eng',
+        //     { logger: m => console.log(m) }
+        // ).then(({ data: { text } }) => {
+        //      console.log(text);
+        //     setExtractedText(text);
+        //     showLoader(false);
+        // }).catch(error => {
+        //     setErrorMessage('Error occurred during OCR processing.');
+        //     showLoader(false);
+        // });
     }
 
     const handleClear = () => {
@@ -97,7 +141,7 @@ const LensSection = () => {
      <div class="container">
          
         
-         <textarea id="extractedText" rows="10" cols="50" placeholder="Extracted Text" value={extractedText}></textarea>
+         <textarea id="extractedText" rows="10" cols="50" placeholder="Extracted Medicines" value={extractedText}></textarea>
       
          
          <button id="clearBtn" disabled={loading} onClick={handleClear}>Clear</button>
